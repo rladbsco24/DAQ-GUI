@@ -108,6 +108,60 @@ const spectrogramCanvas = document.getElementById('spectrogram-chart');
 const chartState = {
   selected: 'p1',
   data: Array.from({ length: 40 }, () => 0),
+  signal: [],
+  spectrum: [],
+  spectrogram: [],
+  tick: 0,
+};
+
+const fftBins = 48;
+const signalLength = 96;
+const spectrogramColumns = 80;
+const spectrogramRows = 40;
+
+const buildSignal = (value, config) => {
+  const normalized = (value - config.min) / (config.max - config.min);
+  const base = 1.2 + normalized * 3.2;
+  const amplitude = 0.4 + normalized * 0.45;
+  const phase = chartState.tick * 0.2;
+  const nextSignal = [];
+  for (let i = 0; i < signalLength; i += 1) {
+    const t = i / signalLength;
+    const sample =
+      amplitude * Math.sin(2 * Math.PI * base * t + phase) +
+      0.18 * Math.sin(2 * Math.PI * base * 2.1 * t + phase * 0.7) +
+      0.08 * Math.sin(2 * Math.PI * base * 3.3 * t + phase * 1.3);
+    nextSignal.push(Math.max(-1, Math.min(1, sample)));
+  }
+  return nextSignal;
+};
+
+const computeSpectrum = (signal) => {
+  const spectrum = [];
+  for (let k = 0; k < fftBins; k += 1) {
+    let real = 0;
+    let imag = 0;
+    for (let n = 0; n < signal.length; n += 1) {
+      const angle = (2 * Math.PI * k * n) / signal.length;
+      real += signal[n] * Math.cos(angle);
+      imag -= signal[n] * Math.sin(angle);
+    }
+    const magnitude = Math.sqrt(real * real + imag * imag) / signal.length;
+    spectrum.push(Math.min(1, magnitude * 3));
+  }
+  return spectrum;
+};
+
+const updateSpectrogram = (spectrum) => {
+  const column = [];
+  for (let row = 0; row < spectrogramRows; row += 1) {
+    const index = Math.floor((row / spectrogramRows) * spectrum.length);
+    column.push(spectrum[index] ?? 0);
+  }
+  chartState.spectrogram.push(column);
+  if (chartState.spectrogram.length > spectrogramColumns) {
+    chartState.spectrogram.shift();
+  }
 };
 
 const drawChart = () => {
@@ -163,11 +217,11 @@ const drawFFT = () => {
     ctx.stroke();
   }
 
-  const bars = 48;
+  const bars = fftBins;
   const barWidth = width / bars;
   ctx.fillStyle = 'rgba(255, 159, 64, 0.9)';
   for (let i = 0; i < bars; i += 1) {
-    const amp = Math.max(0.05, Math.sin((i / bars) * Math.PI * 6) * 0.4 + Math.random() * 0.3);
+    const amp = Math.max(0.05, chartState.spectrum[i] ?? 0);
     const barHeight = amp * height;
     ctx.fillRect(i * barWidth, height - barHeight, barWidth * 0.6, barHeight);
   }
@@ -195,11 +249,13 @@ const drawPhase = () => {
   ctx.strokeStyle = 'rgba(255, 165, 0, 0.85)';
   ctx.lineWidth = 2;
   ctx.beginPath();
-  const points = 180;
-  for (let i = 0; i <= points; i += 1) {
-    const t = (i / points) * Math.PI * 2;
-    const x = width / 2 + Math.cos(t) * (width * 0.28) + Math.cos(t * 2) * 12;
-    const y = height / 2 + Math.sin(t * 1.2) * (height * 0.28);
+  const points = chartState.signal.length;
+  const phaseShift = Math.floor(points * 0.12);
+  for (let i = 0; i < points; i += 1) {
+    const xVal = chartState.signal[i] ?? 0;
+    const yVal = chartState.signal[(i + phaseShift) % points] ?? 0;
+    const x = width / 2 + xVal * (width * 0.35);
+    const y = height / 2 + yVal * (height * 0.35);
     if (i === 0) {
       ctx.moveTo(x, y);
     } else {
@@ -216,15 +272,16 @@ const drawSpectrogram = () => {
   const ctx = spectrogramCanvas.getContext('2d');
   const { width, height } = spectrogramCanvas;
   ctx.clearRect(0, 0, width, height);
-  const columns = 80;
-  const rows = 40;
+  const columns = spectrogramColumns;
+  const rows = spectrogramRows;
   const colWidth = width / columns;
   const rowHeight = height / rows;
   for (let x = 0; x < columns; x += 1) {
+    const column = chartState.spectrogram[x] ?? [];
     for (let y = 0; y < rows; y += 1) {
-      const intensity = Math.max(0, Math.sin((x / columns) * Math.PI * 2) * 0.5 + Math.random() * 0.5);
+      const intensity = column[y] ?? 0;
       const hue = 260 - intensity * 200;
-      const light = 20 + intensity * 50;
+      const light = 18 + intensity * 55;
       ctx.fillStyle = `hsl(${hue}, 90%, ${light}%)`;
       ctx.fillRect(x * colWidth, y * rowHeight, colWidth + 1, rowHeight + 1);
     }
@@ -253,6 +310,10 @@ const pushChartValue = () => {
   if (chartValue) {
     chartValue.textContent = raw.toFixed(2);
   }
+  chartState.tick += 1;
+  chartState.signal = buildSignal(raw, config);
+  chartState.spectrum = computeSpectrum(chartState.signal);
+  updateSpectrogram(chartState.spectrum);
   drawChart();
   drawFFT();
   drawPhase();
