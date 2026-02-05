@@ -182,6 +182,42 @@ svg {
   font-weight: 600;
 }
 
+.sensor.small-box {
+  fill: #13131b;
+}
+
+.dashed-line {
+  stroke: #f6d96b;
+  stroke-width: 2;
+  stroke-dasharray: 8 6;
+}
+
+.valve-tag {
+  stroke-width: 1.5;
+  stroke: rgba(255, 255, 255, 0.35);
+}
+
+.valve-tag.on {
+  fill: rgba(24, 201, 100, 0.25);
+  stroke: rgba(24, 201, 100, 0.6);
+}
+
+.valve-tag.off {
+  fill: rgba(229, 57, 53, 0.25);
+  stroke: rgba(229, 57, 53, 0.6);
+}
+
+.valve-text,
+.valve-state {
+  fill: #eaeaf3;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.valve-state {
+  fill: #ffd9d6;
+}
+
 .valve-panel {
   display: flex;
   flex-direction: column;
