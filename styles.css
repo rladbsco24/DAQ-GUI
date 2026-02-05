@@ -8,7 +8,10 @@
   --accent: #4db2ff;
   --on: #18c964;
   --off: #e53935;
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   --warning: #f6b64c;
+=======
+>>>>>>> main
   --tank-left: #7b3b3b;
   --tank-right: #136b1b;
 }
@@ -28,7 +31,10 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   gap: 24px;
+=======
+>>>>>>> main
   padding: 24px 32px;
   border-bottom: 1px solid var(--panel-border);
   background: linear-gradient(135deg, #14141c, #0f0f15);
@@ -48,7 +54,10 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   justify-content: flex-end;
+=======
+>>>>>>> main
 }
 
 .status-pill {
@@ -119,9 +128,14 @@ body {
 
 .schematic-canvas {
   display: grid;
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   grid-template-columns: minmax(0, 1fr) 240px;
   gap: 16px;
   align-items: start;
+=======
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 16px;
+>>>>>>> main
 }
 
 svg {
@@ -185,6 +199,7 @@ svg {
 .valve-panel {
   display: flex;
   flex-direction: column;
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   gap: 10px;
 }
 
@@ -192,6 +207,14 @@ svg {
 .toggle-btn {
   font-size: 13px;
   padding: 10px 12px;
+=======
+  gap: 12px;
+}
+
+.valve-btn {
+  font-size: 14px;
+  padding: 12px;
+>>>>>>> main
   border-radius: 10px;
   border: 1px solid transparent;
   background: #1c1c25;
@@ -201,6 +224,7 @@ svg {
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   gap: 12px;
 }
 
@@ -212,18 +236,33 @@ svg {
 
 .valve-btn.on,
 .toggle-btn.on {
+=======
+}
+
+.valve-btn span {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.valve-btn.on {
+>>>>>>> main
   background: rgba(24, 201, 100, 0.2);
   border-color: rgba(24, 201, 100, 0.5);
   color: #d7ffe9;
 }
 
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
 .valve-btn.off,
 .toggle-btn.off {
+=======
+.valve-btn.off {
+>>>>>>> main
   background: rgba(229, 57, 53, 0.2);
   border-color: rgba(229, 57, 53, 0.5);
   color: #ffd9d6;
 }
 
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
 .toggle-row {
   margin-top: 12px;
   display: flex;
@@ -244,29 +283,47 @@ svg {
 .status-card,
 .logging-card,
 .config-card {
+=======
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.report-grid article {
+>>>>>>> main
   padding: 14px;
   border: 1px solid var(--panel-border);
   border-radius: 12px;
   background: #14141c;
 }
 
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
 .report-grid h3,
 .status-card h3,
 .logging-card h3,
 .config-card h4 {
+=======
+.report-grid h3 {
+>>>>>>> main
   margin-top: 0;
   font-size: 16px;
 }
 
 .report-grid p,
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
 .report-grid li,
 .status-card li,
 .logging-card li {
+=======
+.report-grid li {
+>>>>>>> main
   font-size: 13px;
   color: var(--muted);
   line-height: 1.5;
 }
 
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
 .status-card ul {
   margin: 0 0 12px;
   padding-left: 18px;
@@ -376,6 +433,25 @@ svg {
   background: rgba(246, 182, 76, 0.2);
   color: #ffe2b7;
   border: 1px solid rgba(246, 182, 76, 0.4);
+=======
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.config-card {
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 16px;
+  background: #14141c;
+}
+
+.config-card h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 15px;
+>>>>>>> main
 }
 
 .kv {
@@ -385,7 +461,10 @@ svg {
   padding: 6px 0;
   border-bottom: 1px dashed #2b2b36;
   color: var(--muted);
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   gap: 12px;
+=======
+>>>>>>> main
 }
 
 .kv:last-child {
@@ -393,7 +472,11 @@ svg {
 }
 
 .secondary {
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   margin-top: 10px;
+=======
+  margin-top: 12px;
+>>>>>>> main
   width: 100%;
   padding: 8px 12px;
   border-radius: 8px;
@@ -404,10 +487,13 @@ svg {
 }
 
 @media (max-width: 960px) {
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
   .app-header {
     flex-direction: column;
   }
 
+=======
+>>>>>>> main
   .schematic-canvas {
     grid-template-columns: 1fr;
   }
