@@ -158,9 +158,21 @@ svg {
   fill: var(--tank-right);
 }
 
-.engine {
-  fill: #3a3a44;
-  stroke: #eaeaf3;
+.engine-body {
+  fill: #2e2e38;
+  stroke: #f3f3f7;
+  stroke-width: 2;
+}
+
+.engine-nozzle {
+  fill: #191920;
+  stroke: #f3f3f7;
+  stroke-width: 2;
+}
+
+.engine-flame {
+  fill: #0a0a0c;
+  stroke: #f3f3f7;
   stroke-width: 2;
 }
 

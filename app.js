@@ -302,23 +302,45 @@ const drawPhase = () => {
   ctx.lineTo(width, height / 2);
   ctx.stroke();
 
-  ctx.strokeStyle = 'rgba(255, 165, 0, 0.85)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
   const points = chartState.signal.length;
   const phaseShift = Math.floor(points * 0.12);
+  const pathPoints = [];
   for (let i = 0; i < points; i += 1) {
     const xVal = chartState.signal[i] ?? 0;
     const yVal = chartState.signal[(i + phaseShift) % points] ?? 0;
     const x = width / 2 + xVal * (width * 0.35);
     const y = height / 2 + yVal * (height * 0.35);
-    if (i === 0) {
+    pathPoints.push({ x, y });
+  }
+
+  ctx.strokeStyle = 'rgba(90, 60, 10, 0.5)';
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  pathPoints.forEach((point, index) => {
+    const x = point.x + 8;
+    const y = point.y + 8;
+    if (index === 0) {
       ctx.moveTo(x, y);
     } else {
       ctx.lineTo(x, y);
     }
-  }
+  });
   ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255, 180, 40, 0.95)';
+  ctx.lineWidth = 2.6;
+  ctx.shadowColor = 'rgba(255, 180, 40, 0.6)';
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  pathPoints.forEach((point, index) => {
+    if (index === 0) {
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+    }
+  });
+  ctx.stroke();
+  ctx.shadowBlur = 0;
 };
 
 const drawSpectrogram = () => {
