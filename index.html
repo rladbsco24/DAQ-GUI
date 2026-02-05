@@ -158,6 +158,34 @@
       </div>
     </section>
 
+    <section class="panel charts">
+      <div class="panel-header">
+        <h2>실시간 그래프</h2>
+        <div class="chart-controls">
+          <button class="chart-btn active" data-sensor="p1">P1</button>
+          <button class="chart-btn" data-sensor="p2">P2</button>
+          <button class="chart-btn" data-sensor="p3">P3</button>
+          <button class="chart-btn" data-sensor="p4">P4</button>
+          <button class="chart-btn" data-sensor="t1">T1</button>
+          <button class="chart-btn" data-sensor="t2">T2</button>
+          <button class="chart-btn" data-sensor="dp1">DP1</button>
+          <button class="chart-btn" data-sensor="dp2">DP2</button>
+          <button class="chart-btn" data-sensor="flow1">Flow-1</button>
+          <button class="chart-btn" data-sensor="flow2">Flow-2</button>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-meta">
+          <div>
+            <p class="chart-title">P1</p>
+            <p class="chart-unit">bar</p>
+          </div>
+          <div class="chart-value" id="chart-latest">0.00</div>
+        </div>
+        <canvas id="trend-chart" width="900" height="260"></canvas>
+      </div>
+    </section>
+
     <section class="panel status">
       <div class="panel-header">
         <h2>운용 상태 & 알람</h2>
