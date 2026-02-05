@@ -1,31 +1,41 @@
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
 const toggleButtons = document.querySelectorAll('.valve-btn, .toggle-btn');
 
-const toggleState = (button) => {
-=======
-const valveButtons = document.querySelectorAll('.valve-btn');
-
-const toggleValve = (button) => {
->>>>>>> main
-  const isOn = button.dataset.state === 'on';
-  const nextState = isOn ? 'off' : 'on';
-  button.dataset.state = nextState;
-  button.classList.toggle('on', nextState === 'on');
-  button.classList.toggle('off', nextState === 'off');
-  const label = button.querySelector('span');
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
-  if (label) {
-    label.textContent = nextState.toUpperCase();
+const updateValveLabel = (button, state) => {
+  const valveId = button.dataset.valve;
+  if (!valveId) {
+    return;
   }
+
+  const valveLabel = document.querySelector(`.valve-label[data-valve="${valveId}"]`);
+  if (!valveLabel) {
+    return;
+  }
+
+  valveLabel.textContent = state.toUpperCase();
+  valveLabel.classList.toggle('on', state === 'on');
+  valveLabel.classList.toggle('off', state === 'off');
+};
+
+const setButtonState = (button, state) => {
+  button.dataset.state = state;
+  button.classList.toggle('on', state === 'on');
+  button.classList.toggle('off', state === 'off');
+
+  const label = button.querySelector('span');
+  if (label) {
+    label.textContent = state.toUpperCase();
+  }
+
+  updateValveLabel(button, state);
+};
+
+const toggleState = (button) => {
+  const isOn = button.dataset.state === 'on';
+  setButtonState(button, isOn ? 'off' : 'on');
 };
 
 toggleButtons.forEach((button) => {
+  const initialState = button.dataset.state || 'off';
+  setButtonState(button, initialState);
   button.addEventListener('click', () => toggleState(button));
-=======
-  label.textContent = nextState.toUpperCase();
-};
-
-valveButtons.forEach((button) => {
-  button.addEventListener('click', () => toggleValve(button));
->>>>>>> main
 });

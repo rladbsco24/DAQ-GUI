@@ -72,10 +72,32 @@
           <text x="474" y="425" class="label small">GCFV</text>
           <text x="474" y="475" class="label small">GCOV</text>
 
-          <text x="108" y="352" class="label small">BV1</text>
-          <text x="268" y="352" class="label small">BV2</text>
-          <text x="598" y="352" class="label small">BV3</text>
-          <text x="758" y="352" class="label small">BV4</text>
+          <text x="92" y="330" class="label small">BV1</text>
+          <text x="92" y="346" class="valve-label on" data-valve="BV1">ON</text>
+
+          <text x="232" y="330" class="label small">BV2</text>
+          <text x="232" y="346" class="valve-label off" data-valve="BV2">OFF</text>
+
+          <text x="642" y="330" class="label small">BV3</text>
+          <text x="642" y="346" class="valve-label off" data-valve="BV3">OFF</text>
+
+          <text x="782" y="330" class="label small">BV4</text>
+          <text x="782" y="346" class="valve-label on" data-valve="BV4">ON</text>
+
+          <text x="230" y="405" class="label small">GCFV</text>
+          <text x="230" y="421" class="valve-label off" data-valve="GCFV">OFF</text>
+
+          <text x="600" y="405" class="label small">GCOV</text>
+          <text x="600" y="421" class="valve-label on" data-valve="GCOV">ON</text>
+
+          <text x="420" y="520" class="label small">MFV</text>
+          <text x="420" y="536" class="valve-label off" data-valve="MFV">OFF</text>
+
+          <text x="470" y="520" class="label small">MOV</text>
+          <text x="470" y="536" class="valve-label on" data-valve="MOV">ON</text>
+
+          <circle cx="450" cy="610" r="28" class="engine" />
+          <text x="430" y="655" class="label small">ENGINE</text>
 
           <rect x="50" y="370" width="78" height="26" rx="6" class="sensor" />
           <text x="58" y="388" class="sensor-text">P3 0.00</text>
@@ -106,14 +128,14 @@
         </svg>
 
         <div class="valve-panel">
-          <button class="valve-btn off" data-state="off">GCFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">GCOV <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">GCFF <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">BV-1 <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">MFV-2 <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">Igniter <span>ON</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="BV1">BV1 <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="BV2">BV2 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="BV3">BV3 <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="BV4">BV4 <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="GCFV">GCFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="GCOV">GCOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="MFV">MFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="MOV">MOV <span>ON</span></button>
         </div>
       </div>
     </section>
