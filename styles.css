@@ -141,6 +141,16 @@ svg {
   stroke-linecap: round;
 }
 
+.vent {
+  stroke: #7fd3ff;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.arrow-head {
+  fill: #7fd3ff;
+}
+
 .tank {
   stroke: #d4d4e0;
   stroke-width: 2;
@@ -152,6 +162,12 @@ svg {
 
 .tank-right {
   fill: var(--tank-right);
+}
+
+.valve {
+  fill: #1e1e27;
+  stroke: #8ec5ff;
+  stroke-width: 2;
 }
 
 .engine {
