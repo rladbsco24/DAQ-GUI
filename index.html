@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DAQ GUI Prototype</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>로켓 지상시험 DAQ/GUI</h1>
+      <p>실시간 상태 표시, 로깅, 캘리브레이션, 구성 관리까지 포함한 통합 운용 시안</p>
+    </div>
+    <div class="status-strip">
+      <span class="status-pill connected">Connected</span>
+      <span class="status-pill">Frames: 12000</span>
+      <span class="status-pill">Drops: 2 (0.017%)</span>
+      <span class="status-pill">CRC Errors: 0</span>
+      <span class="status-pill">Queue: 42%</span>
+      <span class="status-pill">NTP Sync: OK</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel schematic">
+      <div class="panel-header">
+        <h2>추진제 공급/배관도</h2>
+        <div class="legend">
+          <span class="legend-item on">ON</span>
+          <span class="legend-item off">OFF</span>
+        </div>
+      </div>
+      <div class="schematic-canvas">
+        <svg viewBox="0 0 900 740" aria-label="Propellant schematic">
+          <defs>
+            <marker id="arrow-head" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#eaeaf3" />
+            </marker>
+          </defs>
+          <rect x="20" y="20" width="860" height="700" rx="18" class="frame" />
+
+          <text x="120" y="105" class="label">GC1</text>
+          <text x="275" y="105" class="label">GC2</text>
+          <text x="610" y="105" class="label">GC3</text>
+          <text x="760" y="105" class="label">GC4</text>
+          <text x="120" y="125" class="label small">GCH4</text>
+          <text x="275" y="125" class="label small">GCH4</text>
+          <text x="610" y="125" class="label small">GOx</text>
+          <text x="760" y="125" class="label small">GOx</text>
+
+          <rect x="80" y="140" width="120" height="230" rx="50" class="tank tank-left" />
+          <rect x="230" y="140" width="120" height="230" rx="50" class="tank tank-left" />
+          <rect x="560" y="140" width="120" height="230" rx="50" class="tank tank-right" />
+          <rect x="710" y="140" width="120" height="230" rx="50" class="tank tank-right" />
+          <text x="120" y="255" class="label tank-label">GC1</text>
+          <text x="120" y="280" class="label small tank-label">GCH4</text>
+          <text x="270" y="255" class="label tank-label">GC2</text>
+          <text x="270" y="280" class="label small tank-label">GCH4</text>
+          <text x="600" y="255" class="label tank-label">GC3</text>
+          <text x="600" y="280" class="label small tank-label">GOx</text>
+          <text x="750" y="255" class="label tank-label">GC4</text>
+          <text x="750" y="280" class="label small tank-label">GOx</text>
+
+          <rect x="80" y="70" width="90" height="26" rx="6" class="sensor" />
+          <text x="88" y="88" class="sensor-text" id="sensor-p1">P1 0.00 bar</text>
+          <rect x="720" y="70" width="90" height="26" rx="6" class="sensor" />
+          <text x="728" y="88" class="sensor-text" id="sensor-p2">P2 0.00 bar</text>
+
+          <line x1="140" y1="370" x2="140" y2="470" class="pipe" />
+          <line x1="290" y1="370" x2="290" y2="470" class="pipe" />
+          <line x1="620" y1="370" x2="620" y2="470" class="pipe" />
+          <line x1="770" y1="370" x2="770" y2="470" class="pipe" />
+
+          <line x1="140" y1="470" x2="420" y2="470" class="pipe" />
+          <line x1="480" y1="470" x2="770" y2="470" class="pipe" />
+          <line x1="450" y1="470" x2="450" y2="610" class="pipe" />
+
+          <line x1="60" y1="430" x2="360" y2="430" class="dashed-line" />
+          <line x1="540" y1="430" x2="840" y2="430" class="dashed-line" />
+
+          <line x1="210" y1="100" x2="210" y2="40" class="pipe" marker-end="url(#arrow-head)" />
+          <text x="185" y="32" class="label small">BV1</text>
+          <text x="160" y="48" class="label small">GCH4 Vent</text>
+          <line x1="690" y1="100" x2="690" y2="40" class="pipe" marker-end="url(#arrow-head)" />
+          <text x="665" y="32" class="label small">BV2</text>
+          <text x="650" y="48" class="label small">GOx Vent</text>
+
+          <line x1="140" y1="430" x2="60" y2="430" class="pipe" />
+          <line x1="770" y1="430" x2="840" y2="430" class="pipe" />
+          <text x="45" y="455" class="label small">BV3</text>
+          <text x="30" y="470" class="label small">GCH4 Vent</text>
+          <text x="830" y="455" class="label small">BV4</text>
+          <text x="810" y="470" class="label small">GOx Vent</text>
+          <line x1="88" y1="430" x2="112" y2="430" class="valve-symbol" />
+          <line x1="112" y1="420" x2="88" y2="440" class="valve-symbol" />
+          <line x1="788" y1="430" x2="812" y2="430" class="valve-symbol" />
+          <line x1="812" y1="420" x2="788" y2="440" class="valve-symbol" />
+
+          <rect x="230" y="410" width="70" height="26" rx="6" class="sensor" />
+          <text x="238" y="428" class="sensor-text" id="sensor-p3">P3 0.00 bar</text>
+          <rect x="600" y="410" width="70" height="26" rx="6" class="sensor" />
+          <text x="608" y="428" class="sensor-text" id="sensor-p4">P4 0.00 bar</text>
+
+          <rect x="330" y="540" width="90" height="26" rx="6" class="sensor" />
+          <text x="338" y="558" class="sensor-text" id="sensor-dp1">DP1 0.00 kPa</text>
+          <rect x="470" y="540" width="90" height="26" rx="6" class="sensor" />
+          <text x="478" y="558" class="sensor-text" id="sensor-dp2">DP2 0.00 kPa</text>
+          <rect x="340" y="508" width="80" height="24" rx="6" class="sensor small-box" />
+          <text x="348" y="525" class="sensor-text" id="sensor-flow1">0.00 g/s</text>
+          <rect x="470" y="508" width="80" height="24" rx="6" class="sensor small-box" />
+          <text x="478" y="525" class="sensor-text" id="sensor-flow2">0.00 g/s</text>
+
+          <rect x="140" y="560" width="80" height="26" rx="6" class="sensor" />
+          <text x="148" y="578" class="sensor-text" id="sensor-t1">T1 0.0℃</text>
+          <rect x="640" y="560" width="80" height="26" rx="6" class="sensor" />
+          <text x="648" y="578" class="sensor-text" id="sensor-t2">T2 0.0℃</text>
+
+          <rect x="330" y="620" width="90" height="26" rx="6" class="sensor" />
+          <text x="338" y="638" class="sensor-text" id="sensor-l1">L1 0.00 N</text>
+
+          <circle cx="450" cy="650" r="34" class="engine" />
+          <text x="430" y="702" class="label small">ENGINE</text>
+
+          <rect x="330" y="675" width="80" height="26" rx="6" class="sensor" />
+          <text x="338" y="693" class="sensor-text" id="sensor-p5">P5 0.00 bar</text>
+          <rect x="470" y="675" width="80" height="26" rx="6" class="sensor" />
+          <text x="478" y="693" class="sensor-text" id="sensor-p6">P6 0.00 bar</text>
+          <rect x="510" y="645" width="80" height="26" rx="6" class="sensor" />
+          <text x="518" y="663" class="sensor-text" id="sensor-t3">T3 0.0℃</text>
+
+          <rect x="370" y="395" width="70" height="24" rx="6" class="valve-tag off" />
+          <text x="382" y="411" class="valve-text">GCFV</text>
+          <text x="420" y="411" class="valve-state off">OFF</text>
+          <rect x="450" y="395" width="70" height="24" rx="6" class="valve-tag on" />
+          <text x="462" y="411" class="valve-text">GCOV</text>
+          <text x="500" y="411" class="valve-state on">ON</text>
+
+          <rect x="140" y="595" width="70" height="24" rx="6" class="valve-tag on" />
+          <text x="152" y="611" class="valve-text">MFV</text>
+          <text x="184" y="611" class="valve-state on">OFF</text>
+          <rect x="640" y="595" width="70" height="24" rx="6" class="valve-tag off" />
+          <text x="652" y="611" class="valve-text">MOV</text>
+          <text x="684" y="611" class="valve-state off">ON</text>
+        </svg>
+
+        <div class="valve-panel">
+          <button class="valve-btn off" data-state="off">GCFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on">GCOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off">BV1 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off">BV2 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off">BV3 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off">BV4 <span>OFF</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel charts">
+      <div class="panel-header">
+        <h2>실시간 그래프</h2>
+        <div class="chart-controls">
+          <button class="chart-btn active" data-sensor="p1">P1</button>
+          <button class="chart-btn" data-sensor="p2">P2</button>
+          <button class="chart-btn" data-sensor="p3">P3</button>
+          <button class="chart-btn" data-sensor="p4">P4</button>
+          <button class="chart-btn" data-sensor="t1">T1</button>
+          <button class="chart-btn" data-sensor="t2">T2</button>
+          <button class="chart-btn" data-sensor="dp1">DP1</button>
+          <button class="chart-btn" data-sensor="dp2">DP2</button>
+          <button class="chart-btn" data-sensor="flow1">Flow-1</button>
+          <button class="chart-btn" data-sensor="flow2">Flow-2</button>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-meta">
+          <div>
+            <p class="chart-title">P1</p>
+            <p class="chart-unit">bar</p>
+          </div>
+          <div class="chart-value" id="chart-latest">0.00</div>
+        </div>
+        <canvas id="trend-chart" width="900" height="260"></canvas>
+      </div>
+    </section>
+
+    <section class="panel status">
+      <div class="panel-header">
+        <h2>운용 상태 & 알람</h2>
+      </div>
+      <div class="status-grid">
+        <div class="status-card">
+          <h3>연결/동기화</h3>
+          <ul>
+            <li>USB 링크 상태: 안정적</li>
+            <li>NTP/PTP 동기: 0.8 ms</li>
+            <li>재연결 횟수: 0</li>
+          </ul>
+          <div class="toggle-row">
+            <button class="toggle-btn on" data-state="on">Auto Reconnect <span>ON</span></button>
+            <button class="toggle-btn on" data-state="on">Drop Monitor <span>ON</span></button>
+          </div>
+        </div>
+        <div class="status-card">
+          <h3>경고 및 인터락</h3>
+          <ul class="alarm-list">
+            <li class="alarm warning">P1 저압 경고 (임계치 50psi)</li>
+            <li class="alarm ok">CRC 정상</li>
+            <li class="alarm ok">파일 저장 공간 78% 여유</li>
+          </ul>
+          <div class="toggle-row">
+            <button class="toggle-btn off" data-state="off">Emergency Stop <span>OFF</span></button>
+            <button class="toggle-btn on" data-state="on">Interlock <span>ON</span></button>
+          </div>
+        </div>
+        <div class="status-card">
+          <h3>큐/처리량</h3>
+          <div class="meter">
+            <span>큐 사용량</span>
+            <div class="bar">
+              <div class="bar-fill" style="width: 42%"></div>
+            </div>
+          </div>
+          <div class="meter">
+            <span>디스크 기록 속도</span>
+            <div class="bar">
+              <div class="bar-fill" style="width: 68%"></div>
+            </div>
+          </div>
+          <div class="meter">
+            <span>GUI 업데이트 주기</span>
+            <div class="bar">
+              <div class="bar-fill" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel logging">
+      <div class="panel-header">
+        <h2>세션 로깅 & 메타데이터</h2>
+      </div>
+      <div class="logging-grid">
+        <div class="logging-card">
+          <h3>세션 관리</h3>
+          <div class="kv">
+            <span>세션 ID</span>
+            <span>2026-02-05_run07</span>
+          </div>
+          <div class="kv">
+            <span>파일 포맷</span>
+            <span>CSV + HDF5</span>
+          </div>
+          <div class="kv">
+            <span>파일 위치</span>
+            <span>D:/DAQ/logs/</span>
+          </div>
+          <div class="toggle-row">
+            <button class="toggle-btn on" data-state="on">Logging <span>ON</span></button>
+            <button class="toggle-btn on" data-state="on">Batch Write <span>ON</span></button>
+          </div>
+        </div>
+        <div class="logging-card">
+          <h3>시험 메타데이터</h3>
+          <div class="form-grid">
+            <div>
+              <label>시험명</label>
+              <input type="text" value="LOX/CH4 cold-flow" />
+            </div>
+            <div>
+              <label>담당자</label>
+              <input type="text" value="J. Doe" />
+            </div>
+            <div>
+              <label>시험장</label>
+              <input type="text" value="Pad A" />
+            </div>
+            <div>
+              <label>버전</label>
+              <input type="text" value="DAQ v2.1" />
+            </div>
+          </div>
+        </div>
+        <div class="logging-card">
+          <h3>채널 요약</h3>
+          <table class="channel-table">
+            <thead>
+              <tr>
+                <th>채널</th>
+                <th>단위</th>
+                <th>보정</th>
+                <th>표시</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ChamberPressure</td>
+                <td>psi</td>
+                <td>scale 0.0987</td>
+                <td><span class="chip good">ON</span></td>
+              </tr>
+              <tr>
+                <td>FuelTemp</td>
+                <td>℃</td>
+                <td>offset -100</td>
+                <td><span class="chip good">ON</span></td>
+              </tr>
+              <tr>
+                <td>OxFlow</td>
+                <td>kg/s</td>
+                <td>scale 1.02</td>
+                <td><span class="chip warn">LIMIT</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel report">
+      <div class="panel-header">
+        <h2>설계 보고서 요약</h2>
+      </div>
+      <div class="report-grid">
+        <article>
+          <h3>설계 목표 및 범위</h3>
+          <p>STM32 기반 센서 데이터를 실시간으로 수집/표시하고 안전하게 저장하며, 신뢰성·실시간성·확장성을 확보합니다.</p>
+        </article>
+        <article>
+          <h3>계층 구조</h3>
+          <ul>
+            <li>하드웨어/통신/처리/파이프라인/프레젠테이션 계층으로 분리</li>
+            <li>Producer-Consumer 구조로 데이터 흐름 분산</li>
+          </ul>
+        </article>
+        <article>
+          <h3>로깅 및 세션 관리</h3>
+          <ul>
+            <li>세션 단위 파일 분리, 메타데이터 포함</li>
+            <li>CSV/HDF5/MDF 포맷 지원 및 export 전략</li>
+          </ul>
+        </article>
+        <article>
+          <h3>캘리브레이션</h3>
+          <ul>
+            <li>장기/단기 보정 분리, 버전 관리</li>
+            <li>Zero/Span 보정 UI 제공</li>
+          </ul>
+        </article>
+        <article>
+          <h3>신뢰성 기능</h3>
+          <ul>
+            <li>자동 재연결, 드롭/CRC 감지</li>
+            <li>상태 카드에 지표 표시</li>
+          </ul>
+        </article>
+        <article>
+          <h3>확장 고려</h3>
+          <ul>
+            <li>제어 계층 분리 및 외부 시스템 연계</li>
+            <li>자동 분석/리포트 생성 준비</li>
+          </ul>
+        </article>
+        <article>
+          <h3>보안/권한</h3>
+          <ul>
+            <li>로그 파일 접근 권한 관리</li>
+            <li>원격 전송 TLS 적용</li>
+          </ul>
+        </article>
+        <article>
+          <h3>데이터 흐름</h3>
+          <ul>
+            <li>Producer → 내부 큐 → Logger/GUI Consumer</li>
+            <li>세션 종료 시 자동 보고서 생성</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel config">
+      <div class="panel-header">
+        <h2>설정 & 캘리브레이션</h2>
+      </div>
+      <div class="config-grid">
+        <div class="config-card">
+          <h4>구성 프로파일</h4>
+          <div class="kv">
+            <span>활성 프로파일</span>
+            <span>Engine_A</span>
+          </div>
+          <div class="kv">
+            <span>업데이트</span>
+            <span>2026-02-05 09:41</span>
+          </div>
+          <div class="toggle-row">
+            <button class="toggle-btn on" data-state="on">Auto Load <span>ON</span></button>
+            <button class="toggle-btn off" data-state="off">Lock <span>OFF</span></button>
+          </div>
+        </div>
+        <div class="config-card">
+          <h4>채널 레지스트리</h4>
+          <div class="kv">
+            <span>ChamberPressure</span>
+            <span>psi · scale 0.1 · offset 0.0</span>
+          </div>
+          <div class="kv">
+            <span>FuelTemp</span>
+            <span>℃ · scale 0.01 · offset -100</span>
+          </div>
+          <div class="kv">
+            <span>OxValve</span>
+            <span>state · on/off</span>
+          </div>
+        </div>
+        <div class="config-card">
+          <h4>캘리브레이션</h4>
+          <div class="kv">
+            <span>Long-term</span>
+            <span>scale 0.0987 / offset 0.0</span>
+          </div>
+          <div class="kv">
+            <span>Short-term</span>
+            <span>zero offset +0.5 psi</span>
+          </div>
+          <div class="kv">
+            <span>버전</span>
+            <span>V2.3</span>
+          </div>
+          <button class="secondary">Zero Calibrate Now</button>
+          <button class="secondary">Span Calibrate Now</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
