@@ -130,30 +130,30 @@
           <rect x="510" y="645" width="80" height="26" rx="6" class="sensor" />
           <text x="518" y="663" class="sensor-text" id="sensor-t3">T3 0.0℃</text>
 
-          <rect x="370" y="395" width="70" height="24" rx="6" class="valve-tag off" />
+          <rect x="370" y="395" width="70" height="24" rx="6" class="valve-tag off" id="tag-gcfv" />
           <text x="382" y="411" class="valve-text">GCFV</text>
-          <text x="420" y="411" class="valve-state off">OFF</text>
-          <rect x="450" y="395" width="70" height="24" rx="6" class="valve-tag on" />
+          <text x="420" y="411" class="valve-state off" id="state-gcfv">OFF</text>
+          <rect x="450" y="395" width="70" height="24" rx="6" class="valve-tag on" id="tag-gcov" />
           <text x="462" y="411" class="valve-text">GCOV</text>
-          <text x="500" y="411" class="valve-state on">ON</text>
+          <text x="500" y="411" class="valve-state on" id="state-gcov">ON</text>
 
-          <rect x="140" y="595" width="70" height="24" rx="6" class="valve-tag on" />
+          <rect x="140" y="595" width="70" height="24" rx="6" class="valve-tag on" id="tag-mfv" />
           <text x="152" y="611" class="valve-text">MFV</text>
-          <text x="184" y="611" class="valve-state on">OFF</text>
-          <rect x="640" y="595" width="70" height="24" rx="6" class="valve-tag off" />
+          <text x="184" y="611" class="valve-state on" id="state-mfv">OFF</text>
+          <rect x="640" y="595" width="70" height="24" rx="6" class="valve-tag off" id="tag-mov" />
           <text x="652" y="611" class="valve-text">MOV</text>
-          <text x="684" y="611" class="valve-state off">ON</text>
+          <text x="684" y="611" class="valve-state off" id="state-mov">ON</text>
         </svg>
 
         <div class="valve-panel">
-          <button class="valve-btn off" data-state="off">GCFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">GCOV <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">BV1 <span>OFF</span></button>
-          <button class="valve-btn off" data-state="off">BV2 <span>OFF</span></button>
-          <button class="valve-btn off" data-state="off">BV3 <span>OFF</span></button>
-          <button class="valve-btn off" data-state="off">BV4 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="gcfv">GCFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="gcov">GCOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="mfv">MFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="mov">MOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="bv1">BV1 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="bv2">BV2 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="bv3">BV3 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="bv4">BV4 <span>OFF</span></button>
         </div>
       </div>
     </section>
@@ -174,15 +174,44 @@
           <button class="chart-btn" data-sensor="flow2">Flow-2</button>
         </div>
       </div>
-      <div class="chart-card">
-        <div class="chart-meta">
-          <div>
-            <p class="chart-title">P1</p>
-            <p class="chart-unit">bar</p>
+      <div class="chart-grid">
+        <div class="chart-card wide">
+          <div class="chart-meta">
+            <div>
+              <p class="chart-title">P1</p>
+              <p class="chart-unit">bar</p>
+            </div>
+            <div class="chart-value" id="chart-latest">0.00</div>
           </div>
-          <div class="chart-value" id="chart-latest">0.00</div>
+          <canvas id="trend-chart" width="900" height="240"></canvas>
         </div>
-        <canvas id="trend-chart" width="900" height="260"></canvas>
+        <div class="chart-card">
+          <div class="chart-meta">
+            <div>
+              <p class="chart-title">FFT</p>
+              <p class="chart-unit">Hz</p>
+            </div>
+          </div>
+          <canvas id="fft-chart" width="420" height="240"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-meta">
+            <div>
+              <p class="chart-title">Phase</p>
+              <p class="chart-unit">Lissajous</p>
+            </div>
+          </div>
+          <canvas id="phase-chart" width="420" height="240"></canvas>
+        </div>
+        <div class="chart-card wide">
+          <div class="chart-meta">
+            <div>
+              <p class="chart-title">Spectrogram</p>
+              <p class="chart-unit">Intensity</p>
+            </div>
+          </div>
+          <canvas id="spectrogram-chart" width="900" height="240"></canvas>
+        </div>
       </div>
     </section>
 
