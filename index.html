@@ -10,13 +10,22 @@
   <header class="app-header">
     <div>
       <h1>로켓 지상시험 DAQ/GUI</h1>
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
+      <p>실시간 상태 표시, 로깅, 캘리브레이션, 구성 관리까지 포함한 통합 운용 시안</p>
+=======
       <p>실시간 상태 표시, 로깅, 캘리브레이션을 포함한 GUI 시안</p>
+>>>>>>> main
     </div>
     <div class="status-strip">
       <span class="status-pill connected">Connected</span>
       <span class="status-pill">Frames: 12000</span>
       <span class="status-pill">Drops: 2 (0.017%)</span>
       <span class="status-pill">CRC Errors: 0</span>
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
+      <span class="status-pill">Queue: 42%</span>
+      <span class="status-pill">NTP Sync: OK</span>
+=======
+>>>>>>> main
     </div>
   </header>
 
@@ -80,8 +89,151 @@
         <div class="valve-panel">
           <button class="valve-btn off" data-state="off">GCFV <span>OFF</span></button>
           <button class="valve-btn on" data-state="on">GCOV <span>ON</span></button>
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
+          <button class="valve-btn off" data-state="off">GCFF <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on">BV-1 <span>ON</span></button>
           <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
           <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off">MFV-2 <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on">Igniter <span>ON</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel status">
+      <div class="panel-header">
+        <h2>운용 상태 & 알람</h2>
+      </div>
+      <div class="status-grid">
+        <div class="status-card">
+          <h3>연결/동기화</h3>
+          <ul>
+            <li>USB 링크 상태: 안정적</li>
+            <li>NTP/PTP 동기: 0.8 ms</li>
+            <li>재연결 횟수: 0</li>
+          </ul>
+          <div class="toggle-row">
+            <button class="toggle-btn on" data-state="on">Auto Reconnect <span>ON</span></button>
+            <button class="toggle-btn on" data-state="on">Drop Monitor <span>ON</span></button>
+          </div>
+        </div>
+        <div class="status-card">
+          <h3>경고 및 인터락</h3>
+          <ul class="alarm-list">
+            <li class="alarm warning">P1 저압 경고 (임계치 50psi)</li>
+            <li class="alarm ok">CRC 정상</li>
+            <li class="alarm ok">파일 저장 공간 78% 여유</li>
+          </ul>
+          <div class="toggle-row">
+            <button class="toggle-btn off" data-state="off">Emergency Stop <span>OFF</span></button>
+            <button class="toggle-btn on" data-state="on">Interlock <span>ON</span></button>
+          </div>
+        </div>
+        <div class="status-card">
+          <h3>큐/처리량</h3>
+          <div class="meter">
+            <span>큐 사용량</span>
+            <div class="bar">
+              <div class="bar-fill" style="width: 42%"></div>
+            </div>
+          </div>
+          <div class="meter">
+            <span>디스크 기록 속도</span>
+            <div class="bar">
+              <div class="bar-fill" style="width: 68%"></div>
+            </div>
+          </div>
+          <div class="meter">
+            <span>GUI 업데이트 주기</span>
+            <div class="bar">
+              <div class="bar-fill" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel logging">
+      <div class="panel-header">
+        <h2>세션 로깅 & 메타데이터</h2>
+      </div>
+      <div class="logging-grid">
+        <div class="logging-card">
+          <h3>세션 관리</h3>
+          <div class="kv">
+            <span>세션 ID</span>
+            <span>2026-02-05_run07</span>
+          </div>
+          <div class="kv">
+            <span>파일 포맷</span>
+            <span>CSV + HDF5</span>
+          </div>
+          <div class="kv">
+            <span>파일 위치</span>
+            <span>D:/DAQ/logs/</span>
+          </div>
+          <div class="toggle-row">
+            <button class="toggle-btn on" data-state="on">Logging <span>ON</span></button>
+            <button class="toggle-btn on" data-state="on">Batch Write <span>ON</span></button>
+          </div>
+        </div>
+        <div class="logging-card">
+          <h3>시험 메타데이터</h3>
+          <div class="form-grid">
+            <div>
+              <label>시험명</label>
+              <input type="text" value="LOX/CH4 cold-flow" />
+            </div>
+            <div>
+              <label>담당자</label>
+              <input type="text" value="J. Doe" />
+            </div>
+            <div>
+              <label>시험장</label>
+              <input type="text" value="Pad A" />
+            </div>
+            <div>
+              <label>버전</label>
+              <input type="text" value="DAQ v2.1" />
+            </div>
+          </div>
+        </div>
+        <div class="logging-card">
+          <h3>채널 요약</h3>
+          <table class="channel-table">
+            <thead>
+              <tr>
+                <th>채널</th>
+                <th>단위</th>
+                <th>보정</th>
+                <th>표시</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ChamberPressure</td>
+                <td>psi</td>
+                <td>scale 0.0987</td>
+                <td><span class="chip good">ON</span></td>
+              </tr>
+              <tr>
+                <td>FuelTemp</td>
+                <td>℃</td>
+                <td>offset -100</td>
+                <td><span class="chip good">ON</span></td>
+              </tr>
+              <tr>
+                <td>OxFlow</td>
+                <td>kg/s</td>
+                <td>scale 1.02</td>
+                <td><span class="chip warn">LIMIT</span></td>
+              </tr>
+            </tbody>
+          </table>
+=======
+          <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
+>>>>>>> main
         </div>
       </div>
     </section>
@@ -130,6 +282,23 @@
             <li>자동 분석/리포트 생성 준비</li>
           </ul>
         </article>
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
+        <article>
+          <h3>보안/권한</h3>
+          <ul>
+            <li>로그 파일 접근 권한 관리</li>
+            <li>원격 전송 TLS 적용</li>
+          </ul>
+        </article>
+        <article>
+          <h3>데이터 흐름</h3>
+          <ul>
+            <li>Producer → 내부 큐 → Logger/GUI Consumer</li>
+            <li>세션 종료 시 자동 보고서 생성</li>
+          </ul>
+        </article>
+=======
+>>>>>>> main
       </div>
     </section>
 
@@ -139,6 +308,35 @@
       </div>
       <div class="config-grid">
         <div class="config-card">
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
+          <h4>구성 프로파일</h4>
+          <div class="kv">
+            <span>활성 프로파일</span>
+            <span>Engine_A</span>
+          </div>
+          <div class="kv">
+            <span>업데이트</span>
+            <span>2026-02-05 09:41</span>
+          </div>
+          <div class="toggle-row">
+            <button class="toggle-btn on" data-state="on">Auto Load <span>ON</span></button>
+            <button class="toggle-btn off" data-state="off">Lock <span>OFF</span></button>
+          </div>
+        </div>
+        <div class="config-card">
+          <h4>채널 레지스트리</h4>
+          <div class="kv">
+            <span>ChamberPressure</span>
+            <span>psi · scale 0.1 · offset 0.0</span>
+          </div>
+          <div class="kv">
+            <span>FuelTemp</span>
+            <span>℃ · scale 0.01 · offset -100</span>
+          </div>
+          <div class="kv">
+            <span>OxValve</span>
+            <span>state · on/off</span>
+=======
           <h4>채널 레지스트리</h4>
           <div class="kv">
             <span>ChamberPressure</span>
@@ -162,6 +360,7 @@
           <div class="kv">
             <span>Format</span>
             <span>HDF5 + CSV export</span>
+>>>>>>> main
           </div>
         </div>
         <div class="config-card">
@@ -174,7 +373,16 @@
             <span>Short-term</span>
             <span>zero offset +0.5 psi</span>
           </div>
+<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
+          <div class="kv">
+            <span>버전</span>
+            <span>V2.3</span>
+          </div>
           <button class="secondary">Zero Calibrate Now</button>
+          <button class="secondary">Span Calibrate Now</button>
+=======
+          <button class="secondary">Zero Calibrate Now</button>
+>>>>>>> main
         </div>
       </div>
     </section>
