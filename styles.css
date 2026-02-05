@@ -170,6 +170,10 @@ svg {
   font-size: 12px;
 }
 
+.tank-label {
+  text-anchor: middle;
+}
+
 .sensor {
   fill: #171720;
   stroke: #3b3b48;
@@ -197,6 +201,11 @@ svg {
   stroke: rgba(255, 255, 255, 0.35);
 }
 
+.valve-symbol {
+  stroke: #eaeaf3;
+  stroke-width: 2;
+}
+
 .valve-tag.on {
   fill: rgba(24, 201, 100, 0.25);
   stroke: rgba(24, 201, 100, 0.6);
@@ -214,7 +223,11 @@ svg {
   font-weight: 700;
 }
 
-.valve-state {
+.valve-state.on {
+  fill: #c5ffe0;
+}
+
+.valve-state.off {
   fill: #ffd9d6;
 }
 
