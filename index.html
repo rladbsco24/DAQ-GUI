@@ -10,22 +10,15 @@
   <header class="app-header">
     <div>
       <h1>로켓 지상시험 DAQ/GUI</h1>
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
       <p>실시간 상태 표시, 로깅, 캘리브레이션, 구성 관리까지 포함한 통합 운용 시안</p>
-=======
-      <p>실시간 상태 표시, 로깅, 캘리브레이션을 포함한 GUI 시안</p>
->>>>>>> main
     </div>
     <div class="status-strip">
       <span class="status-pill connected">Connected</span>
       <span class="status-pill">Frames: 12000</span>
       <span class="status-pill">Drops: 2 (0.017%)</span>
       <span class="status-pill">CRC Errors: 0</span>
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
       <span class="status-pill">Queue: 42%</span>
       <span class="status-pill">NTP Sync: OK</span>
-=======
->>>>>>> main
     </div>
   </header>
 
@@ -61,6 +54,30 @@
           <line x1="480" y1="420" x2="810" y2="420" class="pipe" />
           <line x1="450" y1="420" x2="450" y2="610" class="pipe" />
 
+          <text x="92" y="330" class="label small">BV1</text>
+          <text x="92" y="346" class="valve-label on" data-valve="BV1">ON</text>
+
+          <text x="232" y="330" class="label small">BV2</text>
+          <text x="232" y="346" class="valve-label off" data-valve="BV2">OFF</text>
+
+          <text x="642" y="330" class="label small">BV3</text>
+          <text x="642" y="346" class="valve-label off" data-valve="BV3">OFF</text>
+
+          <text x="782" y="330" class="label small">BV4</text>
+          <text x="782" y="346" class="valve-label on" data-valve="BV4">ON</text>
+
+          <text x="230" y="405" class="label small">GCFV</text>
+          <text x="230" y="421" class="valve-label off" data-valve="GCFV">OFF</text>
+
+          <text x="600" y="405" class="label small">GCOV</text>
+          <text x="600" y="421" class="valve-label on" data-valve="GCOV">ON</text>
+
+          <text x="420" y="520" class="label small">MFV</text>
+          <text x="420" y="536" class="valve-label off" data-valve="MFV">OFF</text>
+
+          <text x="470" y="520" class="label small">MOV</text>
+          <text x="470" y="536" class="valve-label on" data-valve="MOV">ON</text>
+
           <circle cx="450" cy="610" r="28" class="engine" />
           <text x="430" y="655" class="label small">ENGINE</text>
 
@@ -87,15 +104,14 @@
         </svg>
 
         <div class="valve-panel">
-          <button class="valve-btn off" data-state="off">GCFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">GCOV <span>ON</span></button>
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
-          <button class="valve-btn off" data-state="off">GCFF <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">BV-1 <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
-          <button class="valve-btn off" data-state="off">MFV-2 <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">Igniter <span>ON</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="BV1">BV1 <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="BV2">BV2 <span>OFF</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="BV3">BV3 <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="BV4">BV4 <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="GCFV">GCFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="GCOV">GCOV <span>ON</span></button>
+          <button class="valve-btn off" data-state="off" data-valve="MFV">MFV <span>OFF</span></button>
+          <button class="valve-btn on" data-state="on" data-valve="MOV">MOV <span>ON</span></button>
         </div>
       </div>
     </section>
@@ -230,10 +246,6 @@
               </tr>
             </tbody>
           </table>
-=======
-          <button class="valve-btn off" data-state="off">MFV <span>OFF</span></button>
-          <button class="valve-btn on" data-state="on">MOV <span>ON</span></button>
->>>>>>> main
         </div>
       </div>
     </section>
@@ -282,7 +294,6 @@
             <li>자동 분석/리포트 생성 준비</li>
           </ul>
         </article>
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
         <article>
           <h3>보안/권한</h3>
           <ul>
@@ -297,8 +308,6 @@
             <li>세션 종료 시 자동 보고서 생성</li>
           </ul>
         </article>
-=======
->>>>>>> main
       </div>
     </section>
 
@@ -308,7 +317,6 @@
       </div>
       <div class="config-grid">
         <div class="config-card">
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
           <h4>구성 프로파일</h4>
           <div class="kv">
             <span>활성 프로파일</span>
@@ -336,15 +344,6 @@
           <div class="kv">
             <span>OxValve</span>
             <span>state · on/off</span>
-=======
-          <h4>채널 레지스트리</h4>
-          <div class="kv">
-            <span>ChamberPressure</span>
-            <span>psi · scale 0.1 · offset 0.0</span>
-          </div>
-          <div class="kv">
-            <span>FuelTemp</span>
-            <span>℃ · scale 0.01 · offset -100</span>
           </div>
         </div>
         <div class="config-card">
@@ -360,7 +359,6 @@
           <div class="kv">
             <span>Format</span>
             <span>HDF5 + CSV export</span>
->>>>>>> main
           </div>
         </div>
         <div class="config-card">
@@ -373,16 +371,12 @@
             <span>Short-term</span>
             <span>zero offset +0.5 psi</span>
           </div>
-<<<<<<< codex/create-gui-for-report-and-photo-display-j28i8c
           <div class="kv">
             <span>버전</span>
             <span>V2.3</span>
           </div>
           <button class="secondary">Zero Calibrate Now</button>
           <button class="secondary">Span Calibrate Now</button>
-=======
-          <button class="secondary">Zero Calibrate Now</button>
->>>>>>> main
         </div>
       </div>
     </section>
