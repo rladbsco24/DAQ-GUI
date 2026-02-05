@@ -67,16 +67,21 @@ sensorConfig.forEach((sensor) => {
 
 const formatValue = (value, decimals = 2) => value.toFixed(decimals);
 
+const formatSensorMarkup = (sensor, value) => {
+  const decimals = sensor.decimals ?? 2;
+  const labelText = sensor.label ? `<tspan class=\"sensor-label\">${sensor.label}</tspan> ` : '';
+  const unitText = sensor.unit.trim();
+  const unitSpan = unitText ? ` <tspan class=\"sensor-unit\">${unitText}</tspan>` : '';
+  return `${labelText}<tspan class=\"sensor-value\">${formatValue(value, decimals)}</tspan>${unitSpan}`;
+};
+
 const updateSensors = () => {
   sensorTargets.forEach((sensor) => {
-    const decimals = sensor.decimals ?? 2;
     const previous = sensorState.get(sensor.id) ?? sensor.min;
     const drift = randomValue(-0.05, 0.05);
     const next = Math.min(sensor.max, Math.max(sensor.min, previous + drift));
     sensorState.set(sensor.id, next);
-    const value = formatValue(next, decimals);
-    const prefix = sensor.label ? `${sensor.label} ` : '';
-    sensor.node.textContent = `${prefix}${value}${sensor.unit}`;
+    sensor.node.innerHTML = formatSensorMarkup(sensor, next);
   });
 };
 
@@ -104,6 +109,22 @@ const chartCanvas = document.getElementById('trend-chart');
 const fftCanvas = document.getElementById('fft-chart');
 const phaseCanvas = document.getElementById('phase-chart');
 const spectrogramCanvas = document.getElementById('spectrogram-chart');
+
+const prepareCanvas = (canvas) => {
+  const ctx = canvas.getContext('2d');
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  const width = Math.max(1, Math.floor(rect.width));
+  const height = Math.max(1, Math.floor(rect.height));
+  const targetWidth = Math.floor(width * dpr);
+  const targetHeight = Math.floor(height * dpr);
+  if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, width, height };
+};
 
 const chartState = {
   selected: 'p1',
@@ -168,8 +189,7 @@ const drawChart = () => {
   if (!chartCanvas) {
     return;
   }
-  const ctx = chartCanvas.getContext('2d');
-  const { width, height } = chartCanvas;
+  const { ctx, width, height } = prepareCanvas(chartCanvas);
   ctx.clearRect(0, 0, width, height);
 
   ctx.strokeStyle = 'rgba(255,255,255,0.08)';
@@ -182,12 +202,18 @@ const drawChart = () => {
     ctx.stroke();
   }
 
-  ctx.strokeStyle = 'rgba(77, 178, 255, 0.85)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  chartState.data.forEach((value, index) => {
+  const points = chartState.data.map((value, index) => {
     const x = (width / (chartState.data.length - 1)) * index;
-    const y = height - value * height;
+    const y = height - value * (height - 24) - 8;
+    return { x, y };
+  });
+
+  ctx.strokeStyle = 'rgba(25, 60, 110, 0.55)';
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  points.forEach((point, index) => {
+    const x = point.x + 10;
+    const y = point.y + 10;
     if (index === 0) {
       ctx.moveTo(x, y);
     } else {
@@ -195,14 +221,45 @@ const drawChart = () => {
     }
   });
   ctx.stroke();
+
+  ctx.beginPath();
+  points.forEach((point, index) => {
+    if (index === 0) {
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+    }
+  });
+  ctx.lineTo(points[points.length - 1].x, height - 6);
+  ctx.lineTo(points[0].x, height - 6);
+  ctx.closePath();
+  const fill = ctx.createLinearGradient(0, 0, 0, height);
+  fill.addColorStop(0, 'rgba(77, 178, 255, 0.35)');
+  fill.addColorStop(1, 'rgba(8, 16, 28, 0.05)');
+  ctx.fillStyle = fill;
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(77, 178, 255, 0.95)';
+  ctx.lineWidth = 2.4;
+  ctx.shadowColor = 'rgba(77, 178, 255, 0.6)';
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  points.forEach((point, index) => {
+    if (index === 0) {
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+    }
+  });
+  ctx.stroke();
+  ctx.shadowBlur = 0;
 };
 
 const drawFFT = () => {
   if (!fftCanvas) {
     return;
   }
-  const ctx = fftCanvas.getContext('2d');
-  const { width, height } = fftCanvas;
+  const { ctx, width, height } = prepareCanvas(fftCanvas);
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = 'rgba(15, 15, 24, 0.95)';
   ctx.fillRect(0, 0, width, height);
@@ -231,8 +288,7 @@ const drawPhase = () => {
   if (!phaseCanvas) {
     return;
   }
-  const ctx = phaseCanvas.getContext('2d');
-  const { width, height } = phaseCanvas;
+  const { ctx, width, height } = prepareCanvas(phaseCanvas);
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = 'rgba(12, 12, 18, 0.95)';
   ctx.fillRect(0, 0, width, height);
@@ -246,31 +302,52 @@ const drawPhase = () => {
   ctx.lineTo(width, height / 2);
   ctx.stroke();
 
-  ctx.strokeStyle = 'rgba(255, 165, 0, 0.85)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
   const points = chartState.signal.length;
   const phaseShift = Math.floor(points * 0.12);
+  const pathPoints = [];
   for (let i = 0; i < points; i += 1) {
     const xVal = chartState.signal[i] ?? 0;
     const yVal = chartState.signal[(i + phaseShift) % points] ?? 0;
     const x = width / 2 + xVal * (width * 0.35);
     const y = height / 2 + yVal * (height * 0.35);
-    if (i === 0) {
+    pathPoints.push({ x, y });
+  }
+
+  ctx.strokeStyle = 'rgba(90, 60, 10, 0.5)';
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  pathPoints.forEach((point, index) => {
+    const x = point.x + 8;
+    const y = point.y + 8;
+    if (index === 0) {
       ctx.moveTo(x, y);
     } else {
       ctx.lineTo(x, y);
     }
-  }
+  });
   ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255, 180, 40, 0.95)';
+  ctx.lineWidth = 2.6;
+  ctx.shadowColor = 'rgba(255, 180, 40, 0.6)';
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  pathPoints.forEach((point, index) => {
+    if (index === 0) {
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+    }
+  });
+  ctx.stroke();
+  ctx.shadowBlur = 0;
 };
 
 const drawSpectrogram = () => {
   if (!spectrogramCanvas) {
     return;
   }
-  const ctx = spectrogramCanvas.getContext('2d');
-  const { width, height } = spectrogramCanvas;
+  const { ctx, width, height } = prepareCanvas(spectrogramCanvas);
   ctx.clearRect(0, 0, width, height);
   const columns = spectrogramColumns;
   const rows = spectrogramRows;

@@ -80,12 +80,12 @@
           <line x1="60" y1="430" x2="360" y2="430" class="dashed-line" />
           <line x1="540" y1="430" x2="840" y2="430" class="dashed-line" />
 
-          <line x1="210" y1="100" x2="210" y2="40" class="pipe" marker-end="url(#arrow-head)" />
-          <text x="185" y="32" class="label small">BV1</text>
-          <text x="160" y="48" class="label small">GCH4 Vent</text>
-          <line x1="690" y1="100" x2="690" y2="40" class="pipe" marker-end="url(#arrow-head)" />
-          <text x="665" y="32" class="label small">BV2</text>
-          <text x="650" y="48" class="label small">GOx Vent</text>
+          <line x1="210" y1="100" x2="210" y2="32" class="pipe" marker-end="url(#arrow-head)" />
+          <text x="198" y="20" class="label small">BV1</text>
+          <text x="170" y="36" class="label small">GCH4 Vent</text>
+          <line x1="690" y1="100" x2="690" y2="32" class="pipe" marker-end="url(#arrow-head)" />
+          <text x="678" y="20" class="label small">BV2</text>
+          <text x="652" y="36" class="label small">GOx Vent</text>
 
           <line x1="140" y1="430" x2="60" y2="430" class="pipe" />
           <line x1="770" y1="430" x2="840" y2="430" class="pipe" />
@@ -120,8 +120,12 @@
           <rect x="330" y="620" width="90" height="26" rx="6" class="sensor" />
           <text x="338" y="638" class="sensor-text" id="sensor-l1">L1 0.00 N</text>
 
-          <circle cx="450" cy="650" r="34" class="engine" />
-          <text x="430" y="702" class="label small">ENGINE</text>
+          <g class="engine">
+            <ellipse cx="450" cy="642" rx="26" ry="22" class="engine-body" />
+            <path d="M438 660 L462 660 L472 690 L428 690 Z" class="engine-nozzle" />
+            <path d="M444 690 L456 690 L450 714 Z" class="engine-flame" />
+          </g>
+          <text x="430" y="724" class="label small">ENGINE</text>
 
           <rect x="330" y="675" width="80" height="26" rx="6" class="sensor" />
           <text x="338" y="693" class="sensor-text" id="sensor-p5">P5 0.00 bar</text>
